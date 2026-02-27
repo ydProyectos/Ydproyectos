@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título que se ve en la pestaña -->
+    <title>Mi primera PWA</title>
+
+    <!-- (Todavía no existe, lo usaremos después)
+         Este archivo le dirá al navegador cómo se ve la app -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.ico">
+</head>
+<script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(() => {
+          console.log("Service Worker registrado");
+        })
+        .catch(error => {
+          console.log("Error:", error);
+        });
+    }
+  </script>
+
+<body>
+
+    <h1>Mi primera PWA 🚀</h1>
+    <p>Esta aplicación funciona como una app instalada.</p>
+
+</body>
+</html>
