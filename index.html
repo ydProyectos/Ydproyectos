@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Título que se ve en la pestaña -->
-    <title>Mi primera PWA</title>
+    <title>App web</title>
 
     <!-- (Todavía no existe, lo usaremos después)
          Este archivo le dirá al navegador cómo se ve la app -->
@@ -31,9 +31,56 @@
   </script>
 
 <body>
+<!-- SPLASH CON VIDEO -->
+<div id="splash">
+  <video autoplay muted playsinline id="introVideo">
+    <source src="intro.mp4" type="video/mp4">
+    Tu navegador no soporta video.
+  </video>
+</div>
 
-    <h1>Mi primera PWA 🚀</h1>
-    <p>Esta aplicación funciona como una app instalada.</p>
+<!-- CONTENIDO REAL DE LA APP -->
+<div id="app" style="display:none;">
+  <h1>Yd proyectos app🚀</h1>
+  <p>Bienvenido a mi aplicación</p>
+</div>
+
+<style>
+  #splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  #splash video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  const video = document.getElementById("introVideo");
+  const splash = document.getElementById("splash");
+  const app = document.getElementById("app");
+
+  video.onended = () => {
+    splash.style.display = "none";
+    app.style.display = "block";
+  };
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
 
 </body>
+
 </html>
