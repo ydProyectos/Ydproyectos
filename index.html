@@ -39,6 +39,24 @@
 <div id="app" style="display:none;">
   <h1>Yd proyectos app🚀</h1>
   <p>Bienvenido a mi aplicación</p>
+    <!-- IMAGEN BOTÓN -->
+<img 
+  src="boton 1.jpg" 
+  alt="Ver presentación"
+  id="openVideo"
+/>
+
+<div id="videoContainer">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+  >
+    <source src="tarjeta.mp4" type="video/mp4">
+  </video>
+</div>
     
 </div>
 
@@ -87,7 +105,28 @@ body {
   color: white;
   padding: 20px;
 }
+/* Imagen tipo botón */
+#openVideo {
+  width: 220px;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
 
+/* Contenedor del video */
+#videoContainer {
+  display: none;
+  margin-top: 20px;
+}
+
+/* Video tipo tarjeta */
+#videoContainer video {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  background: black;
+}
   
 </style>
 
@@ -105,10 +144,20 @@ body {
     navigator.serviceWorker.register("sw.js");
   }
 </script>
+    <script>
+  const boton = document.getElementById("openVideo");
+  const videoBox = document.getElementById("videoContainer");
+
+  boton.addEventListener("click", () => {
+    boton.style.display = "none";   // ocultar imagen
+    videoBox.style.display = "block"; // mostrar video
+  });
+</script>
 
 </body>
 
 </html>
+
 
 
 
