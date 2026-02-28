@@ -1,6 +1,6 @@
 {
-  "name": "Mi primera PWA",
-  "short_name": "MiPWA",
+  "name": "Yd proyectos y diagramas",
+  "short_name": "Ydproyectos",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -12,4 +12,5 @@
       "type": "image/png"
     }
   ]
+
 }
