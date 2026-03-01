@@ -1,113 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yd proyectos appweb</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yd proyectos appweb</title>
 
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="favicon.ico">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.ico">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: url("Fondo.jpg") center / cover no-repeat;
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: url("Fondo.jpg") center / cover no-repeat;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
 
-    /* SPLASH */
-    #splash {
-      position: fixed;
-      inset: 0;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+/* SPLASH */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
-    #splash video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+#splash video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    /* APP */
-    #app {
-      display: none;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-    }
+/* SECCIONES */
+.section {
+  display: none;
+  min-height: 100vh;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
-    /* BOTONES IMAGEN */
-    .imgBtn {
-      width: 220px;
-      border-radius: 16px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    }
+#menu { display: none; }
 
-    .sectionTitle {
-      font-size: 18px;
-      font-weight: 600;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-    }
+/* BOTONES */
+.imgBtn {
+  width: 220px;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  margin-top: 20px;
+}
 
-    /* VIDEO TARJETA */
-    #cardContainer {
-      display: none;
-      margin-top: 20px;
-    }
+.sectionTitle {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
 
-    #cardContainer video {
-      width: 100%;
-      max-width: 320px;
-      border-radius: 16px;
-    }
+/* VIDEO TARJETA */
+#cardVideo {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
 
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* FULL VIDEO */
-    #fullVideoContainer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: black;
-      z-index: 10000;
-    }
-
-    #fullVideo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    #backFull {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10001;
-    }
-  </style>
+/* BOTÓN REGRESAR */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -119,8 +94,8 @@
   </video>
 </div>
 
-<!-- APP -->
-<div id="app">
+<!-- MENÚ -->
+<div id="menu" class="section">
   <h1>Yd proyectos app 🚀</h1>
 
   <!-- BOTÓN 1 -->
@@ -130,82 +105,84 @@
   <!-- BOTÓN 2 -->
   <img src="boton 2.png" class="imgBtn" id="openFull">
   <div class="sectionTitle">Insta Army</div>
-
-  <!-- VIDEO TARJETA -->
-  <div id="cardContainer">
-    <video id="cardVideo" autoplay muted loop playsinline>
-      <source src="tarjeta.mp4" type="video/mp4">
-    </video>
-    <button id="backCard">Regresar</button>
-  </div>
 </div>
 
-<!-- VIDEO PANTALLA COMPLETA -->
-<div id="fullVideoContainer">
+<!-- SECCIÓN PRESENTACIÓN -->
+<div id="presentation" class="section">
+  <video id="cardVideo" autoplay muted loop playsinline>
+    <source src="tarjeta.mp4" type="video/mp4">
+  </video>
+
+  <button id="backToMenu">Regresar</button>
+</div>
+
+<!-- VIDEO FULL -->
+<div id="fullVideoContainer" class="section" style="background:black;">
   <button id="backFull">Regresar</button>
-  <video id="fullVideo" controls></video>
+  <video id="fullVideo" controls style="width:100%;height:100%;object-fit:contain;"></video>
 </div>
 
 <script>
-  /* SPLASH */
-  const splash = document.getElementById("splash");
-  const app = document.getElementById("app");
+/* SPLASH */
+const splash = document.getElementById("splash");
+const menu = document.getElementById("menu");
 
-  setTimeout(() => {
-    splash.style.display = "none";
-    app.style.display = "flex";
-  }, 3000);
+setTimeout(() => {
+  splash.style.display = "none";
+  menu.style.display = "flex";
+}, 3000);
 
-  /* BOTÓN 1 */
-  const openCard = document.getElementById("openCard");
-  const cardContainer = document.getElementById("cardContainer");
-  const backCard = document.getElementById("backCard");
+/* SECCIONES */
+const presentation = document.getElementById("presentation");
+const fullBox = document.getElementById("fullVideoContainer");
 
-  openCard.onclick = () => {
-    cardContainer.style.display = "block";
-  };
+/* BOTÓN 1 */
+document.getElementById("openCard").onclick = () => {
+  menu.style.display = "none";
+  presentation.style.display = "flex";
+};
 
-  backCard.onclick = () => {
-    cardContainer.style.display = "none";
-  };
+document.getElementById("backToMenu").onclick = () => {
+  presentation.style.display = "none";
+  menu.style.display = "flex";
+};
 
-  /* BOTÓN 2 - DOS VIDEOS */
-  const openFull = document.getElementById("openFull");
-  const fullBox = document.getElementById("fullVideoContainer");
-  const fullVideo = document.getElementById("fullVideo");
-  const backFull = document.getElementById("backFull");
+/* BOTÓN 2 – DOS VIDEOS */
+const fullVideo = document.getElementById("fullVideo");
+const videos = ["insta-1.mp4", "insta-2.mp4"];
+let index = 0;
 
-  const videos = ["insta-1.mp4", "insta-2.mp4"];
-  let current = 0;
+document.getElementById("openFull").onclick = () => {
+  index = 0;
+  fullVideo.src = videos[index];
+  menu.style.display = "none";
+  fullBox.style.display = "flex";
+  fullVideo.play();
+};
 
-  openFull.onclick = () => {
-    current = 0;
-    fullVideo.src = videos[current];
-    fullBox.style.display = "block";
+fullVideo.onended = () => {
+  index++;
+  if (index < videos.length) {
+    fullVideo.src = videos[index];
     fullVideo.play();
-  };
-
-  fullVideo.onended = () => {
-    current++;
-    if (current < videos.length) {
-      fullVideo.src = videos[current];
-      fullVideo.play();
-    }
-  };
-
-  backFull.onclick = () => {
-    fullVideo.pause();
-    fullBox.style.display = "none";
-  };
-
-  /* SERVICE WORKER */
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
   }
+};
+
+document.getElementById("backFull").onclick = () => {
+  fullVideo.pause();
+  fullBox.style.display = "none";
+  menu.style.display = "flex";
+};
+
+/* SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
 </script>
 
 </body>
 </html>
+
 
 
 
