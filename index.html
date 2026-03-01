@@ -1,163 +1,168 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yd proyectos appweb</title>
 
-    <meta charset="UTF-8">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico">
 
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Yd proyectos appweb</title>
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="favicon.ico">
-</head>
-<script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js")
-        .then(() => {
-          console.log("Service Worker registrado");
-        })
-        .catch(error => {
-          console.log("Error:", error);
-        });
+  <style>
+    /* ===== SPLASH ===== */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
     }
-  </script>
+
+    #splash video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ===== RESET ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ===== FONDO ===== */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url("Fondo.jpg") center / cover no-repeat;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ===== APP ===== */
+    #app {
+      display: none;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+
+    /* ===== BOTÓN IMAGEN ===== */
+    #openVideo {
+      width: 220px;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    /* ===== TÍTULO ===== */
+    #sectionTitle {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+
+    /* ===== VIDEO ===== */
+    #videoContainer {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #videoContainer video {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      background: black;
+    }
+
+    /* ===== BOTÓN REGRESAR ===== */
+    #backBtn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+    }
+  </style>
+</head>
 
 <body>
 
-<div id="splash">
-  <video autoplay muted playsinline id="introVideo">
-    <source src="intro.mp4" type="video/mp4">
-    Tu navegador no soporta video.
-  </video>
-</div>
+  <!-- SPLASH -->
+  <div id="splash">
+    <video autoplay muted playsinline>
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+  </div>
 
-<div id="app" style="display:none;">
-  <h1>Yd proyectos app🚀</h1>
-  <p>Bienvenido a mi aplicación</p>
-    <!-- IMAGEN BOTÓN -->
-<img 
-  src="boton 1.png" 
-  alt="Ver presentación"
-  id="openVideo"
-/>
+  <!-- APP -->
+  <div id="app">
+    <h1>Yd proyectos app 🚀</h1>
+    <p>Bienvenido a mi aplicación</p>
 
-<div id="videoContainer">
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-    webkit-playsinline
-  >
-    <source src="tarjeta.mp4" type="video/mp4">
-  </video>
-</div>
-    
-</div>
+    <img src="boton 1.png" alt="Ver presentación" id="openVideo">
+    <h2 id="sectionTitle">Presentación</h2>
 
-<style>
-  #splash {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
+    <div id="videoContainer">
+      <video id="cardVideo" autoplay muted loop playsinline>
+        <source src="tarjeta.mp4" type="video/mp4">
+      </video>
 
-  #splash video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-    /* ===== RESET ===== */
-* {
-  box-sizing: border-box;
-}
+      <button id="backBtn">Regresar</button>
+    </div>
+  </div>
 
-/* ===== FONDO ===== */
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: url("Fondo.jpg") center / cover no-repeat;
-  font-family: Arial, sans-serif;
-}
+  <!-- SCRIPTS -->
+  <script>
+    // Splash
+    const splash = document.getElementById("splash");
+    const app = document.getElementById("app");
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
-#app {
-  position: relative;
-  z-index: 2;               /* asegura que esté encima */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  padding: 20px;
-}
-/* Imagen tipo botón */
-#openVideo {
-  width: 220px;
-  border-radius: 16px;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-}
+    setTimeout(() => {
+      splash.style.display = "none";
+      app.style.display = "flex";
+    }, 3000);
 
-/* Contenedor del video */
-#videoContainer {
-  display: none;
-  margin-top: 20px;
-}
+    // Botón y video
+    const boton = document.getElementById("openVideo");
+    const titulo = document.getElementById("sectionTitle");
+    const videoBox = document.getElementById("videoContainer");
+    const video = document.getElementById("cardVideo");
+    const backBtn = document.getElementById("backBtn");
 
-/* Video tipo tarjeta */
-#videoContainer video {
-  width: 100%;
-  max-width: 320px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-  background: black;
-}
-  
-</style>
+    boton.addEventListener("click", () => {
+      boton.style.display = "none";
+      titulo.style.display = "none";
+      videoBox.style.display = "block";
+      video.play();
+    });
 
-<script>
-  const video = document.getElementById("introVideo");
-  const splash = document.getElementById("splash");
-  const app = document.getElementById("app");
+    backBtn.addEventListener("click", () => {
+      video.pause();
+      video.currentTime = 0;
+      videoBox.style.display = "none";
+      boton.style.display = "block";
+      titulo.style.display = "block";
+    });
 
-  video.onended = () => {
-    splash.style.display = "none";
-    app.style.display = "block";
-  };
-
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-  }
-</script>
-    <script>
-  const boton = document.getElementById("openVideo");
-  const videoBox = document.getElementById("videoContainer");
-
-  boton.addEventListener("click", () => {
-    boton.style.display = "none";   // ocultar imagen
-    videoBox.style.display = "block"; // mostrar video
-  });
-</script>
+    // Service Worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
 
 </body>
-
 </html>
-
 
 
 
