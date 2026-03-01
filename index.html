@@ -30,7 +30,6 @@ body {
   align-items: center;
   z-index: 9999;
 }
-
 #splash video {
   width: 100%;
   height: 100%;
@@ -46,10 +45,9 @@ body {
   align-items: center;
   flex-direction: column;
 }
-
 #menu { display: none; }
 
-/* BOTONES */
+/* BOTONES IMAGEN */
 .imgBtn {
   width: 220px;
   border-radius: 16px;
@@ -58,11 +56,27 @@ body {
   margin-top: 20px;
 }
 
+/* TEXTOS */
 .sectionTitle {
   margin-top: 10px;
   font-size: 18px;
   font-weight: 600;
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+/* BOTÓN INSTALAR */
+#installBtn {
+  margin-top: 25px;
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 14px;
+  border: none;
+  background: #ff4fd8;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  display: none;
 }
 
 /* VIDEO TARJETA */
@@ -73,7 +87,7 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.7);
 }
 
-/* BOTÓN REGRESAR */
+/* BOTONES NORMALES */
 button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -81,6 +95,26 @@ button {
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+
+/* VIDEO FULL */
+#fullVideoContainer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 10000;
+}
+#fullVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#backFull {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10001;
 }
 </style>
 </head>
@@ -105,6 +139,9 @@ button {
   <!-- BOTÓN 2 -->
   <img src="boton 2.png" class="imgBtn" id="openFull">
   <div class="sectionTitle">Insta Army</div>
+
+  <!-- BOTÓN INSTALAR -->
+  <button id="installBtn">📲 Instalar App</button>
 </div>
 
 <!-- SECCIÓN PRESENTACIÓN -->
@@ -116,10 +153,10 @@ button {
   <button id="backToMenu">Regresar</button>
 </div>
 
-<!-- VIDEO FULL -->
-<div id="fullVideoContainer" class="section" style="background:black;">
+<!-- VIDEO PANTALLA COMPLETA -->
+<div id="fullVideoContainer">
   <button id="backFull">Regresar</button>
-  <video id="fullVideo" controls style="width:100%;height:100%;object-fit:contain;"></video>
+  <video id="fullVideo" controls></video>
 </div>
 
 <script>
@@ -141,7 +178,6 @@ document.getElementById("openCard").onclick = () => {
   menu.style.display = "none";
   presentation.style.display = "flex";
 };
-
 document.getElementById("backToMenu").onclick = () => {
   presentation.style.display = "none";
   menu.style.display = "flex";
@@ -156,7 +192,7 @@ document.getElementById("openFull").onclick = () => {
   index = 0;
   fullVideo.src = videos[index];
   menu.style.display = "none";
-  fullBox.style.display = "flex";
+  fullBox.style.display = "block";
   fullVideo.play();
 };
 
@@ -174,6 +210,24 @@ document.getElementById("backFull").onclick = () => {
   menu.style.display = "flex";
 };
 
+/* BOTÓN INSTALAR PWA */
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = "none";
+});
+
 /* SERVICE WORKER */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
@@ -182,7 +236,6 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
-
 
 
 
