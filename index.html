@@ -9,6 +9,21 @@
   <link rel="icon" href="favicon.ico">
 
   <style>
+    /* ===== RESET ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ===== BODY ===== */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url("Fondo.jpg") center / cover no-repeat;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
     /* ===== SPLASH ===== */
     #splash {
       position: fixed;
@@ -26,53 +41,38 @@
       object-fit: cover;
     }
 
-    /* ===== RESET ===== */
-    * {
-      box-sizing: border-box;
-    }
-
-    /* ===== FONDO ===== */
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: url("Fondo.jpg") center / cover no-repeat;
-      font-family: Arial, sans-serif;
-    }
-
     /* ===== APP ===== */
     #app {
       display: none;
       min-height: 100vh;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      color: white;
-      padding: 20px;
     }
 
-    /* ===== BOTÓN IMAGEN ===== */
-    #openVideo {
+    /* ===== BOTONES IMAGEN ===== */
+    .imgBtn {
       width: 220px;
       border-radius: 16px;
       cursor: pointer;
       box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      margin-top: 20px;
     }
 
-    /* ===== TÍTULO ===== */
-    #sectionTitle {
-      margin-top: 12px;
+    /* ===== TITULOS ===== */
+    .sectionTitle {
+      margin-top: 10px;
       font-size: 20px;
       font-weight: 600;
       text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    /* ===== VIDEO ===== */
+    /* ===== VIDEO TARJETA ===== */
     #videoContainer {
       display: none;
       margin-top: 20px;
-      text-align: center;
     }
 
     #videoContainer video {
@@ -83,15 +83,32 @@
       background: black;
     }
 
-    /* ===== BOTÓN REGRESAR ===== */
-    #backBtn {
+    /* ===== BOTONES ===== */
+    button {
       margin-top: 15px;
       padding: 10px 20px;
-      border: none;
       border-radius: 12px;
+      border: none;
       font-size: 16px;
-      background: rgba(255,255,255,0.9);
       cursor: pointer;
+    }
+
+    /* ===== VIDEO PANTALLA COMPLETA ===== */
+    #fullVideoContainer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: black;
+      z-index: 10000;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #fullVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
   </style>
 </head>
@@ -110,21 +127,35 @@
     <h1>Yd proyectos app 🚀</h1>
     <p>Bienvenido a mi aplicación</p>
 
-    <img src="boton 1.png" alt="Ver presentación" id="openVideo">
-    <h2 id="sectionTitle">Presentación</h2>
+    <!-- BOTÓN 1 -->
+    <img src="boton 1.png" alt="Presentación" class="imgBtn" id="openCard">
+    <div class="sectionTitle" id="titleCard">Presentación</div>
 
+    <!-- VIDEO TARJETA -->
     <div id="videoContainer">
       <video id="cardVideo" autoplay muted loop playsinline>
         <source src="tarjeta.mp4" type="video/mp4">
       </video>
 
-      <button id="backBtn">Regresar</button>
+      <button id="backCard">Regresar</button>
+
+      <!-- BOTÓN 2 -->
+      <img src="boton 2.png" alt="Insta Army" class="imgBtn" id="openFull">
+      <div class="sectionTitle">Insta Army</div>
     </div>
+  </div>
+
+  <!-- VIDEO PANTALLA COMPLETA -->
+  <div id="fullVideoContainer">
+    <video id="fullVideo" controls>
+      <source src="insta-army-vid.mp4" type="video/mp4">
+    </video>
+    <button id="backFull">Regresar</button>
   </div>
 
   <!-- SCRIPTS -->
   <script>
-    // Splash
+    /* SPLASH */
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
@@ -133,29 +164,45 @@
       app.style.display = "flex";
     }, 3000);
 
-    // Botón y video
-    const boton = document.getElementById("openVideo");
-    const titulo = document.getElementById("sectionTitle");
-    const videoBox = document.getElementById("videoContainer");
-    const video = document.getElementById("cardVideo");
-    const backBtn = document.getElementById("backBtn");
+    /* VIDEO TARJETA */
+    const openCard = document.getElementById("openCard");
+    const titleCard = document.getElementById("titleCard");
+    const cardBox = document.getElementById("videoContainer");
+    const cardVideo = document.getElementById("cardVideo");
+    const backCard = document.getElementById("backCard");
 
-    boton.addEventListener("click", () => {
-      boton.style.display = "none";
-      titulo.style.display = "none";
-      videoBox.style.display = "block";
-      video.play();
+    openCard.addEventListener("click", () => {
+      openCard.style.display = "none";
+      titleCard.style.display = "none";
+      cardBox.style.display = "block";
     });
 
-    backBtn.addEventListener("click", () => {
-      video.pause();
-      video.currentTime = 0;
-      videoBox.style.display = "none";
-      boton.style.display = "block";
-      titulo.style.display = "block";
+    backCard.addEventListener("click", () => {
+      cardVideo.pause();
+      cardVideo.currentTime = 0;
+      cardBox.style.display = "none";
+      openCard.style.display = "block";
+      titleCard.style.display = "block";
     });
 
-    // Service Worker
+    /* VIDEO COMPLETO */
+    const openFull = document.getElementById("openFull");
+    const fullBox = document.getElementById("fullVideoContainer");
+    const fullVideo = document.getElementById("fullVideo");
+    const backFull = document.getElementById("backFull");
+
+    openFull.addEventListener("click", () => {
+      fullBox.style.display = "flex";
+      fullVideo.currentTime = 0;
+      fullVideo.play(); // con sonido
+    });
+
+    backFull.addEventListener("click", () => {
+      fullVideo.pause();
+      fullBox.style.display = "none";
+    });
+
+    /* SERVICE WORKER */
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js");
     }
