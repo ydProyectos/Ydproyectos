@@ -9,12 +9,10 @@
   <link rel="icon" href="favicon.ico">
 
   <style>
-    /* ===== RESET ===== */
     * {
       box-sizing: border-box;
     }
 
-    /* ===== BODY ===== */
     body {
       margin: 0;
       min-height: 100vh;
@@ -24,14 +22,14 @@
       text-align: center;
     }
 
-    /* ===== SPLASH ===== */
+    /* SPLASH */
     #splash {
       position: fixed;
       inset: 0;
       background: black;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       z-index: 9999;
     }
 
@@ -41,49 +39,44 @@
       object-fit: cover;
     }
 
-    /* ===== APP ===== */
+    /* APP */
     #app {
       display: none;
       min-height: 100vh;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
 
-    /* ===== BOTONES IMAGEN ===== */
+    /* BOTONES IMAGEN */
     .imgBtn {
       width: 220px;
       border-radius: 16px;
       cursor: pointer;
       box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      margin-top: 20px;
     }
 
-    /* ===== TITULOS ===== */
     .sectionTitle {
-      margin-top: 10px;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    /* ===== VIDEO TARJETA ===== */
-    #videoContainer {
+    /* VIDEO TARJETA */
+    #cardContainer {
       display: none;
       margin-top: 20px;
     }
 
-    #videoContainer video {
+    #cardContainer video {
       width: 100%;
       max-width: 320px;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-      background: black;
     }
 
-    /* ===== BOTONES ===== */
     button {
       margin-top: 15px;
       padding: 10px 20px;
@@ -93,16 +86,13 @@
       cursor: pointer;
     }
 
-    /* ===== VIDEO PANTALLA COMPLETA ===== */
+    /* FULL VIDEO */
     #fullVideoContainer {
       display: none;
       position: fixed;
       inset: 0;
       background: black;
       z-index: 10000;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
 
     #fullVideo {
@@ -110,103 +100,109 @@
       height: 100%;
       object-fit: contain;
     }
+
+    #backFull {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10001;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- SPLASH -->
-  <div id="splash">
-    <video autoplay muted playsinline>
-      <source src="intro.mp4" type="video/mp4">
+<!-- SPLASH -->
+<div id="splash">
+  <video autoplay muted playsinline>
+    <source src="intro.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <h1>Yd proyectos app 🚀</h1>
+
+  <!-- BOTÓN 1 -->
+  <img src="boton 1.png" class="imgBtn" id="openCard">
+  <div class="sectionTitle">Presentación</div>
+
+  <!-- BOTÓN 2 -->
+  <img src="boton 2.png" class="imgBtn" id="openFull">
+  <div class="sectionTitle">Insta Army</div>
+
+  <!-- VIDEO TARJETA -->
+  <div id="cardContainer">
+    <video id="cardVideo" autoplay muted loop playsinline>
+      <source src="tarjeta.mp4" type="video/mp4">
     </video>
+    <button id="backCard">Regresar</button>
   </div>
+</div>
 
-  <!-- APP -->
-  <div id="app">
-    <h1>Yd proyectos app 🚀</h1>
-    <p>Bienvenido a mi aplicación</p>
+<!-- VIDEO PANTALLA COMPLETA -->
+<div id="fullVideoContainer">
+  <button id="backFull">Regresar</button>
+  <video id="fullVideo" controls></video>
+</div>
 
-    <!-- BOTÓN 1 -->
-    <img src="boton 1.png" alt="Presentación" class="imgBtn" id="openCard">
-    <div class="sectionTitle" id="titleCard">Presentación</div>
+<script>
+  /* SPLASH */
+  const splash = document.getElementById("splash");
+  const app = document.getElementById("app");
 
-    <!-- VIDEO TARJETA -->
-    <div id="videoContainer">
-      <video id="cardVideo" autoplay muted loop playsinline>
-        <source src="tarjeta.mp4" type="video/mp4">
-      </video>
+  setTimeout(() => {
+    splash.style.display = "none";
+    app.style.display = "flex";
+  }, 3000);
 
-      <button id="backCard">Regresar</button>
+  /* BOTÓN 1 */
+  const openCard = document.getElementById("openCard");
+  const cardContainer = document.getElementById("cardContainer");
+  const backCard = document.getElementById("backCard");
 
-      <!-- BOTÓN 2 -->
-      <img src="boton 2.png" alt="Insta Army" class="imgBtn" id="openFull">
-      <div class="sectionTitle">Insta Army</div>
-    </div>
-  </div>
+  openCard.onclick = () => {
+    cardContainer.style.display = "block";
+  };
 
-  <!-- VIDEO PANTALLA COMPLETA -->
-  <div id="fullVideoContainer">
-    <video id="fullVideo" controls>
-      <source src="insta-army-vid.mp4" type="video/mp4">
-    </video>
-    <button id="backFull">Regresar</button>
-  </div>
+  backCard.onclick = () => {
+    cardContainer.style.display = "none";
+  };
 
-  <!-- SCRIPTS -->
-  <script>
-    /* SPLASH */
-    const splash = document.getElementById("splash");
-    const app = document.getElementById("app");
+  /* BOTÓN 2 - DOS VIDEOS */
+  const openFull = document.getElementById("openFull");
+  const fullBox = document.getElementById("fullVideoContainer");
+  const fullVideo = document.getElementById("fullVideo");
+  const backFull = document.getElementById("backFull");
 
-    setTimeout(() => {
-      splash.style.display = "none";
-      app.style.display = "flex";
-    }, 3000);
+  const videos = ["insta-1.mp4", "insta-2.mp4"];
+  let current = 0;
 
-    /* VIDEO TARJETA */
-    const openCard = document.getElementById("openCard");
-    const titleCard = document.getElementById("titleCard");
-    const cardBox = document.getElementById("videoContainer");
-    const cardVideo = document.getElementById("cardVideo");
-    const backCard = document.getElementById("backCard");
+  openFull.onclick = () => {
+    current = 0;
+    fullVideo.src = videos[current];
+    fullBox.style.display = "block";
+    fullVideo.play();
+  };
 
-    openCard.addEventListener("click", () => {
-      openCard.style.display = "none";
-      titleCard.style.display = "none";
-      cardBox.style.display = "block";
-    });
-
-    backCard.addEventListener("click", () => {
-      cardVideo.pause();
-      cardVideo.currentTime = 0;
-      cardBox.style.display = "none";
-      openCard.style.display = "block";
-      titleCard.style.display = "block";
-    });
-
-    /* VIDEO COMPLETO */
-    const openFull = document.getElementById("openFull");
-    const fullBox = document.getElementById("fullVideoContainer");
-    const fullVideo = document.getElementById("fullVideo");
-    const backFull = document.getElementById("backFull");
-
-    openFull.addEventListener("click", () => {
-      fullBox.style.display = "flex";
-      fullVideo.currentTime = 0;
-      fullVideo.play(); // con sonido
-    });
-
-    backFull.addEventListener("click", () => {
-      fullVideo.pause();
-      fullBox.style.display = "none";
-    });
-
-    /* SERVICE WORKER */
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js");
+  fullVideo.onended = () => {
+    current++;
+    if (current < videos.length) {
+      fullVideo.src = videos[current];
+      fullVideo.play();
     }
-  </script>
+  };
+
+  backFull.onclick = () => {
+    fullVideo.pause();
+    fullBox.style.display = "none";
+  };
+
+  /* SERVICE WORKER */
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
 
 </body>
 </html>
