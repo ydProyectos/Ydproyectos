@@ -9,240 +9,156 @@
 <link rel="icon" href="favicon.ico">
 
 <style>
+/* ===== RESET ===== */
 * { box-sizing: border-box; }
 
+/* ===== FONDO ===== */
 body {
   margin: 0;
   min-height: 100vh;
   background: url("Fondo.jpg") center / cover no-repeat;
   font-family: Arial, sans-serif;
   color: white;
-  text-align: center;
 }
 
-/* SPLASH */
-#splash {
-  position: fixed;
-  inset: 0;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-#splash video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* SECCIONES */
-.section {
-  display: none;
+/* ===== APP ===== */
+#app {
   min-height: 100vh;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
 }
-#menu { display: none; }
 
-/* BOTONES IMAGEN */
-.imgBtn {
+/* ===== BOTONES ===== */
+.button-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.button-box img {
   width: 220px;
   border-radius: 16px;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-  margin-top: 20px;
 }
 
-/* TEXTOS */
-.sectionTitle {
-  margin-top: 10px;
-  font-size: 18px;
-  font-weight: 600;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-}
-
-/* BOTÓN INSTALAR */
-#installBtn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 20000;
-
-  padding: 10px 16px;
-  font-size: 14px;
+.button-box span {
+  margin-top: 8px;
   font-weight: bold;
-  border-radius: 999px;
-  border: none;
-
-  background: #0a1a2f; /* 🔵 azul marino */
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-
-  display: none;
-}
-
-/* VIDEO TARJETA */
-#cardVideo {
-  width: 100%;
-  max-width: 320px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-}
-
-/* BOTONES NORMALES */
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: none;
   font-size: 16px;
-  cursor: pointer;
 }
 
-/* VIDEO FULL */
-#fullVideoContainer {
-  display: none;
+/* ===== VIDEO FULL ===== */
+#videoFull {
   position: fixed;
   inset: 0;
   background: black;
-  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  z-index: 9999;
 }
-#fullVideo {
+
+#videoFull video {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-#backFull {
+
+/* ===== BOTÓN REGRESAR ===== */
+#backBtn {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 10001;
+  top: 16px;
+  left: 16px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <video autoplay muted playsinline>
-    <source src="intro.mp4" type="video/mp4">
-  </video>
-</div>
-
-<!-- MENÚ -->
-<div id="menu" class="section">
+<div id="app">
   <h1>Yd proyectos app 🚀</h1>
 
   <!-- BOTÓN 1 -->
-  <img src="boton 1.png" class="imgBtn" id="openCard">
-  <div class="sectionTitle">Presentación</div>
+  <div class="button-box">
+    <img src="boton 1.png" id="btn1">
+    <span>Presentación</span>
+  </div>
 
   <!-- BOTÓN 2 -->
-  <img src="boton 2.png" class="imgBtn" id="openFull">
-  <div class="sectionTitle">Insta Army</div>
+  <div class="button-box">
+    <img src="boton 2.png" id="btn2">
+    <span>Insta Army</span>
+  </div>
 
-  <!-- BOTÓN INSTALAR -->
-  <button id="installBtn">📲 Instalar App</button>
+  <!-- BOTÓN 3 -->
+  <div class="button-box">
+    <img src="boton 3.png" id="btn3">
+    <span>Confitería</span>
+  </div>
 </div>
 
-<!-- SECCIÓN PRESENTACIÓN -->
-<div id="presentation" class="section">
-  <video id="cardVideo" autoplay muted loop playsinline>
-    <source src="tarjeta.mp4" type="video/mp4">
-  </video>
-
-  <button id="backToMenu">Regresar</button>
-</div>
-
-<!-- VIDEO PANTALLA COMPLETA -->
-<div id="fullVideoContainer">
-  <button id="backFull">Regresar</button>
-  <video id="fullVideo" controls></video>
+<!-- VIDEO FULLSCREEN -->
+<div id="videoFull">
+  <div id="backBtn">⬅ Regresar</div>
+  <video id="fullVideo" playsinline controls></video>
 </div>
 
 <script>
-/* SPLASH */
-const splash = document.getElementById("splash");
-const menu = document.getElementById("menu");
-
-setTimeout(() => {
-  splash.style.display = "none";
-  menu.style.display = "flex";
-}, 3000);
-
-/* SECCIONES */
-const presentation = document.getElementById("presentation");
-const fullBox = document.getElementById("fullVideoContainer");
-
-/* BOTÓN 1 */
-document.getElementById("openCard").onclick = () => {
-  menu.style.display = "none";
-  presentation.style.display = "flex";
-};
-document.getElementById("backToMenu").onclick = () => {
-  presentation.style.display = "none";
-  menu.style.display = "flex";
-};
-
-/* BOTÓN 2 – DOS VIDEOS */
+const videoFull = document.getElementById("videoFull");
 const fullVideo = document.getElementById("fullVideo");
-const videos = ["insta-1.mp4", "insta-2.mp4"];
-let index = 0;
+const backBtn = document.getElementById("backBtn");
 
-document.getElementById("openFull").onclick = () => {
-  index = 0;
-  fullVideo.src = videos[index];
-  menu.style.display = "none";
-  fullBox.style.display = "block";
+/* ===== LISTA CONFITERÍA (4 VIDEOS) ===== */
+const confVideos = [
+  "conf1.mp4",
+  "conf2.mp4",
+  "conf3.mp4",
+  "conf4.mp4"
+];
+
+let currentIndex = 0;
+
+/* ===== BOTÓN 3 ===== */
+document.getElementById("btn3").addEventListener("click", () => {
+  currentIndex = 0;
+  playConfVideo();
+});
+
+/* ===== REPRODUCIR CADENA ===== */
+function playConfVideo() {
+  fullVideo.src = confVideos[currentIndex];
+  videoFull.style.display = "flex";
+  fullVideo.muted = false;
   fullVideo.play();
-};
+}
 
 fullVideo.onended = () => {
-  index++;
-  if (index < videos.length) {
-    fullVideo.src = videos[index];
-    fullVideo.play();
+  if (currentIndex < confVideos.length - 1) {
+    currentIndex++;
+    playConfVideo();
   }
 };
 
-document.getElementById("backFull").onclick = () => {
+/* ===== REGRESAR ===== */
+backBtn.addEventListener("click", () => {
   fullVideo.pause();
-  fullBox.style.display = "none";
-  menu.style.display = "flex";
-};
-
-/* BOTÓN INSTALAR PWA */
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
+  fullVideo.src = "";
+  videoFull.style.display = "none";
 });
-
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  installBtn.style.display = "none";
-});
-
-/* SERVICE WORKER */
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
-}
 </script>
 
 </body>
 </html>
-
 
 
 
