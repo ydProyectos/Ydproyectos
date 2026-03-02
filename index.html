@@ -37,14 +37,11 @@ body {
   object-fit: cover;
 }
 
-/* ===== SECCIONES ===== */
-.section {
+/* ===== MENÚ ===== */
+#menu {
   display: none;
   min-height: 100vh;
-  padding-top: 80px;
-  padding-bottom: 40px;
-  flex-direction: column;
-  align-items: center;
+  padding-top: 90px;
 }
 
 /* ===== BOTONES ===== */
@@ -123,7 +120,7 @@ body {
 <button id="installBtn">📲 App</button>
 
 <!-- MENÚ -->
-<div id="menu" class="section">
+<div id="menu">
   <h1>Yd proyectos app 🚀</h1>
 
   <div class="button-box">
@@ -149,14 +146,14 @@ body {
 </div>
 
 <script>
-/* SPLASH */
+/* ===== SPLASH ===== */
 const splash = document.getElementById("splash");
 const menu = document.getElementById("menu");
 const intro = document.getElementById("introVideo");
 
 intro.onended = () => {
   splash.style.display = "none";
-  menu.style.display = "flex";
+  menu.style.display = "block";
 };
 
 /* ===== VIDEO FULL ===== */
@@ -164,31 +161,25 @@ const videoFull = document.getElementById("videoFull");
 const fullVideo = document.getElementById("fullVideo");
 const backBtn = document.getElementById("backBtn");
 
-/* BOTÓN 3 – CONFITERÍA (4 VIDEOS) */
-const confVideos = [
-  "conf1.mp4",
-  "conf2.mp4",
-  "conf3.mp4",
-  "conf4.mp4"
-];
-
+let playlist = [];
 let index = 0;
 
-document.getElementById("btn3").onclick = () => {
+function playPlaylist(videos) {
+  playlist = videos;
   index = 0;
-  playConf();
-};
+  playCurrent();
+}
 
-function playConf() {
-  fullVideo.src = confVideos[index];
+function playCurrent() {
+  fullVideo.src = playlist[index];
   videoFull.style.display = "block";
   fullVideo.play();
 }
 
 fullVideo.onended = () => {
-  if (index < confVideos.length - 1) {
+  if (index < playlist.length - 1) {
     index++;
-    playConf();
+    playCurrent();
   }
 };
 
@@ -197,7 +188,32 @@ backBtn.onclick = () => {
   videoFull.style.display = "none";
 };
 
-/* BOTÓN INSTALAR */
+/* ===== BOTÓN 1 ===== */
+document.getElementById("btn1").onclick = () => {
+  playPlaylist([
+    "tarjeta.mp4"
+  ]);
+};
+
+/* ===== BOTÓN 2 ===== */
+document.getElementById("btn2").onclick = () => {
+  playPlaylist([
+    "insta-army-vid.mp4",
+    "insta-army-vid-2.mp4"
+  ]);
+};
+
+/* ===== BOTÓN 3 ===== */
+document.getElementById("btn3").onclick = () => {
+  playPlaylist([
+    "conf1.mp4",
+    "conf2.mp4",
+    "conf3.mp4",
+    "conf4.mp4"
+  ]);
+};
+
+/* ===== BOTÓN INSTALAR ===== */
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
@@ -216,10 +232,6 @@ installBtn.onclick = async () => {
 
 </body>
 </html>
-
-
-
-
 
 
 
