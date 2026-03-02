@@ -20,7 +20,7 @@ body {
   text-align: center;
 }
 
-/* ===== SPLASH ===== */
+/* SPLASH */
 #splash {
   position: fixed;
   inset: 0;
@@ -30,79 +30,94 @@ body {
   align-items: center;
   z-index: 9999;
 }
-
 #splash video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* ===== MENÚ ===== */
-#menu {
+/* SECCIONES */
+.section {
   display: none;
   min-height: 100vh;
-  padding-top: 90px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+#menu { display: none; }
 
-/* ===== BOTONES ===== */
-.button-box {
-  margin-bottom: 28px;
-}
-
-.button-box img {
+/* BOTONES IMAGEN */
+.imgBtn {
   width: 220px;
   border-radius: 16px;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  margin-top: 20px;
 }
 
-.button-box span {
-  display: block;
-  margin-top: 8px;
-  font-weight: bold;
+/* TEXTOS */
+.sectionTitle {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
 
-/* ===== BOTÓN INSTALAR ===== */
+/* BOTÓN INSTALAR */
 #installBtn {
   position: fixed;
   top: 16px;
   right: 16px;
   z-index: 20000;
   padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
   border-radius: 999px;
   border: none;
   background: #0a1a2f;
   color: white;
-  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   display: none;
 }
 
-/* ===== VIDEO FULL ===== */
-#videoFull {
+/* VIDEO TARJETA */
+#cardVideo {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+
+/* BOTONES NORMALES */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* VIDEO FULL */
+#fullVideoContainer {
   display: none;
   position: fixed;
   inset: 0;
   background: black;
   z-index: 10000;
 }
-
-#videoFull video {
+#fullVideo {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
-#backBtn {
+#backFull {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 20px;
+  left: 20px;
   z-index: 10001;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: none;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -111,123 +126,156 @@ body {
 
 <!-- SPLASH -->
 <div id="splash">
-  <video autoplay muted playsinline id="introVideo">
+  <video autoplay muted playsinline>
     <source src="intro.mp4" type="video/mp4">
   </video>
 </div>
 
-<!-- BOTÓN INSTALAR -->
-<button id="installBtn">📲 App</button>
-
 <!-- MENÚ -->
-<div id="menu">
+<div id="menu" class="section">
   <h1>Yd proyectos app 🚀</h1>
 
-  <div class="button-box">
-    <img src="boton 1.png" id="btn1">
-    <span>Presentación</span>
-  </div>
+  <!-- BOTÓN 1 -->
+  <img src="boton 1.png" class="imgBtn" id="openCard">
+  <div class="sectionTitle">Presentación</div>
 
-  <div class="button-box">
-    <img src="boton 2.png" id="btn2">
-    <span>Insta Army</span>
-  </div>
+  <!-- BOTÓN 2 -->
+  <img src="boton 2.png" class="imgBtn" id="openFull">
+  <div class="sectionTitle">Insta Army</div>
 
-  <div class="button-box">
-    <img src="boton 3.png" id="btn3">
-    <span>Confitería</span>
-  </div>
+  <!-- BOTÓN 3 -->
+  <img src="boton 3.png" class="imgBtn" id="openConfiteria">
+  <div class="sectionTitle">Confiteria</div>
+
+  <!-- BOTÓN INSTALAR -->
+  <button id="installBtn">📲 Instalar App</button>
 </div>
 
-<!-- VIDEO FULL -->
-<div id="videoFull">
-  <button id="backBtn">⬅ Regresar</button>
+<!-- SECCIÓN PRESENTACIÓN -->
+<div id="presentation" class="section">
+  <video id="cardVideo" autoplay muted loop playsinline>
+    <source src="tarjeta.mp4" type="video/mp4">
+  </video>
+  <button id="backToMenu">Regresar</button>
+</div>
+
+<!-- VIDEO PANTALLA COMPLETA -->
+<div id="fullVideoContainer">
+  <button id="backFull">Regresar</button>
   <video id="fullVideo" controls></video>
 </div>
 
 <script>
-/* ===== SPLASH ===== */
+/* SPLASH */
 const splash = document.getElementById("splash");
 const menu = document.getElementById("menu");
-const intro = document.getElementById("introVideo");
 
-intro.onended = () => {
+setTimeout(() => {
   splash.style.display = "none";
-  menu.style.display = "block";
+  menu.style.display = "flex";
+}, 3000);
+
+/* SECCIONES */
+const presentation = document.getElementById("presentation");
+const fullBox = document.getElementById("fullVideoContainer");
+
+/* BOTÓN 1 */
+document.getElementById("openCard").onclick = () => {
+  menu.style.display = "none";
+  presentation.style.display = "flex";
+};
+document.getElementById("backToMenu").onclick = () => {
+  presentation.style.display = "none";
+  menu.style.display = "flex";
 };
 
-/* ===== VIDEO FULL ===== */
-const videoFull = document.getElementById("videoFull");
+/* VIDEO GLOBAL */
 const fullVideo = document.getElementById("fullVideo");
-const backBtn = document.getElementById("backBtn");
 
-let playlist = [];
-let index = 0;
+/* BOTÓN 2 – Insta Army (2 videos) */
+const instaVideos = ["insta-1.mp4", "insta-2.mp4"];
+let instaIndex = 0;
 
-function playPlaylist(videos) {
-  playlist = videos;
-  index = 0;
-  playCurrent();
-}
+/* BOTÓN 3 – Confiteria (4 videos) */
+const confiteriaVideos = [
+  "confiteria-1.mp4",
+  "confiteria-2.mp4",
+  "confiteria-3.mp4",
+  "confiteria-4.mp4"
+];
+let confIndex = 0;
 
-function playCurrent() {
-  fullVideo.src = playlist[index];
-  videoFull.style.display = "block";
+/* Control de modo actual */
+let currentMode = "";
+
+/* ABRIR INSTA */
+document.getElementById("openFull").onclick = () => {
+  currentMode = "insta";
+  instaIndex = 0;
+  fullVideo.src = instaVideos[instaIndex];
+  menu.style.display = "none";
+  fullBox.style.display = "block";
   fullVideo.play();
-}
+};
 
+/* ABRIR CONFITERIA */
+document.getElementById("openConfiteria").onclick = () => {
+  currentMode = "confiteria";
+  confIndex = 0;
+  fullVideo.src = confiteriaVideos[confIndex];
+  menu.style.display = "none";
+  fullBox.style.display = "block";
+  fullVideo.play();
+};
+
+/* CAMBIO AUTOMÁTICO DE VIDEOS */
 fullVideo.onended = () => {
-  if (index < playlist.length - 1) {
-    index++;
-    playCurrent();
+  if (currentMode === "insta") {
+    instaIndex++;
+    if (instaIndex < instaVideos.length) {
+      fullVideo.src = instaVideos[instaIndex];
+      fullVideo.play();
+    }
+  }
+
+  if (currentMode === "confiteria") {
+    confIndex++;
+    if (confIndex < confiteriaVideos.length) {
+      fullVideo.src = confiteriaVideos[confIndex];
+      fullVideo.play();
+    }
   }
 };
 
-backBtn.onclick = () => {
+/* REGRESAR */
+document.getElementById("backFull").onclick = () => {
   fullVideo.pause();
-  videoFull.style.display = "none";
+  fullBox.style.display = "none";
+  menu.style.display = "flex";
 };
 
-/* ===== BOTÓN 1 ===== */
-document.getElementById("btn1").onclick = () => {
-  playPlaylist([
-    "tarjeta.mp4"
-  ]);
-};
-
-/* ===== BOTÓN 2 ===== */
-document.getElementById("btn2").onclick = () => {
-  playPlaylist([
-    "insta-army-vid.mp4",
-    "insta-army-vid-2.mp4"
-  ]);
-};
-
-/* ===== BOTÓN 3 ===== */
-document.getElementById("btn3").onclick = () => {
-  playPlaylist([
-    "conf1.mp4",
-    "conf2.mp4",
-    "conf3.mp4",
-    "conf4.mp4"
-  ]);
-};
-
-/* ===== BOTÓN INSTALAR ===== */
+/* BOTÓN INSTALAR PWA */
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
-window.addEventListener("beforeinstallprompt", e => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = "block";
 });
 
-installBtn.onclick = async () => {
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
   deferredPrompt.prompt();
   await deferredPrompt.userChoice;
+  deferredPrompt = null;
   installBtn.style.display = "none";
-};
+});
+
+/* SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
 </script>
 
 </body>
